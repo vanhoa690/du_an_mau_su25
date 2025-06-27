@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-PolyShop là một cửa hàng kinh doanh đa dạng sản phẩm thuộc nhiều danh mục khác nhau. Dự án này nhằm xây dựng một website giới thiệu sản phẩm và thu nhận phản hồi từ khách hàng để cải tiến chất lượng. Dự án được thực hiện trong khuôn khổ môn học, tập trung vào việc phát triển website sử dụng PHP cơ bản. Lưu ý: Tính năng đặt hàng không▒▒
+PolyShop là một cửa hàng kinh doanh đa dạng sản phẩm thuộc nhiều danh mục khác nhau. Dự án này nhằm xây dựng một website giới thiệu sản phẩm và thu nhận phản hồi từ khách hàng để cải tiến chất lượng. Dự án được thực hiện trong khuôn khổ môn học, tập trung vào việc phát triển website sử dụng PHP cơ bản.
 
 ## Yêu cầu dự án
 

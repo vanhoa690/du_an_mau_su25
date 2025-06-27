@@ -5,7 +5,9 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
 ## 1. Cài đặt môi trường phát triển
 
 ### 1.1. Cài đặt Laragon hoặc XAMPP
+
 #### **Laragon (Ưu tiên vì nhẹ và dễ sử dụng)**
+
 - **Tải và cài đặt**:
   1. Truy cập https://laragon.org/download/ và tải phiên bản phù hợp (Windows).
   2. Cài đặt Laragon với các tùy chọn mặc định.
@@ -15,6 +17,7 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
   - Thư mục gốc của website nằm tại `C:\laragon\www`.
 
 #### **XAMPP (Tùy chọn thay thế)**
+
 - **Tải và cài đặt**:
   1. Truy cập https://www.apachefriends.org/download.html và tải XAMPP cho Windows.
   2. Cài đặt với các thành phần: Apache, MySQL, PHP, phpMyAdmin.
@@ -24,6 +27,7 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
   - Thư mục gốc của website nằm tại `C:\xampp\htdocs`.
 
 ### 1.2. Cài đặt Visual Studio Code (VSCode)
+
 - **Tải và cài đặt**:
   1. Truy cập https://code.visualstudio.com/ và tải phiên bản cho Windows.
   2. Cài đặt VSCode với các tùy chọn mặc định.
@@ -36,6 +40,7 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
   - Mở VSCode, vào **File > Open Folder** và chọn thư mục dự án (ví dụ: `C:\laragon\www\polyshop` hoặc `C:\xampp\htdocs\polyshop`).
 
 ## 2. Tạo repository trên GitHub
+
 - **Tạo tài khoản GitHub**:
   1. Truy cập https://github.com/ và đăng ký tài khoản nếu chưa có.
 - **Tạo repository**:
@@ -52,6 +57,7 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
      ```
 
 ## 3. Sử dụng GitHub Flow (1 người - 1 project)
+
 - **Khởi tạo dự án cục bộ**:
   1. Mở terminal trong VSCode (hoặc Command Prompt).
   2. Di chuyển đến thư mục dự án:
@@ -107,6 +113,7 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
   - Kiểm tra code trước khi đẩy lên GitHub.
 
 ## 4. Setup môi trường chạy code
+
 - **Tạo thư mục dự án**:
   1. Tạo thư mục `polyshop` trong:
      - Laragon: `C:\laragon\www\polyshop`
@@ -131,7 +138,9 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
   - Truy cập `http://localhost/polyshop` trên trình duyệt. Nếu thấy thông tin PHP, môi trường đã hoạt động.
 
 ## 5. Kết nối cơ sở dữ liệu
+
 - **Tạo database**:
+
   1. Mở phpMyAdmin:
      - Laragon: Truy cập `http://localhost/phpmyadmin`.
      - XAMPP: Truy cập `http://localhost/phpmyadmin`.
@@ -140,40 +149,51 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
      CREATE DATABASE polyshop;
      ```
   3. Tạo các bảng (theo sơ đồ ERD đã thiết kế):
+
      ```sql
      CREATE TABLE categories (
-         category_id INT PRIMARY KEY AUTO_INCREMENT,
+         id INT PRIMARY KEY AUTO_INCREMENT,
          name VARCHAR(100) NOT NULL,
          description TEXT
      );
 
      CREATE TABLE products (
-         product_id INT PRIMARY KEY AUTO_INCREMENT,
+         id INT PRIMARY KEY AUTO_INCREMENT,
          category_id INT,
          name VARCHAR(100) NOT NULL,
          description TEXT,
          price DECIMAL(10,2),
          image VARCHAR(255),
-         FOREIGN KEY (category_id) REFERENCES categories(category_id)
+         FOREIGN KEY (category_id) REFERENCES categories(id)
      );
 
-     CREATE TABLE feedback (
-         feedback_id INT PRIMARY KEY AUTO_INCREMENT,
-         product_id INT,
-         customer_name VARCHAR(100),
-         comment TEXT,
-         created_at DATETIME,
-         FOREIGN KEY (product_id) REFERENCES products(product_id)
+      CREATE TABLE users (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        username VARCHAR(50) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        is_admin BOOLEAN DEFAULT FALSE
      );
 
-     CREATE TABLE admins (
-         admin_id INT PRIMARY KEY AUTO_INCREMENT,
-         username VARCHAR(50) NOT NULL,
-         password VARCHAR(255) NOT NULL
+      CREATE TABLE comments (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        product_id INT,
+        user_id INT,
+        customer_name VARCHAR(100),
+        comment TEXT,
+        created_at DATETIME,
+        FOREIGN KEY (product_id) REFERENCES products(id),
+        FOREIGN KEY (user_id) REFERENCES users(id)
      );
      ```
+
+  ```
+
+  ```
+
 - **Tạo file kết nối database**:
+
   - Trong thư mục `includes`, tạo file `config.php`:
+
     ```php
     <?php
     define('DB_HOST', 'localhost');
@@ -189,6 +209,7 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
     }
     ?>
     ```
+
 - **Kiểm tra kết nối**:
   - Tạo file `test_db.php` trong thư mục `polyshop`:
     ```php
@@ -200,11 +221,13 @@ Hướng dẫn này cung cấp các bước chi tiết để sinh viên thiết 
   - Truy cập `http://localhost/polyshop/test_db.php`. Nếu thấy thông báo "Database connected successfully!", kết nối thành công.
 
 ## Lưu ý
+
 - Luôn sao lưu mã nguồn và cơ sở dữ liệu trước khi thực hiện thay đổi lớn.
 - Đảm bảo .gitignore bao gồm các file nhạy cảm như `config.php` để tránh đẩy thông tin database lên GitHub.
 - Kiểm tra định kỳ Apache và MySQL trong Laragon/XAMPP để đảm bảo server đang chạy.
 
 ## Tài liệu tham khảo
+
 - Laragon: https://laragon.org/docs/
 - XAMPP: https://www.apachefriends.org/docs/
 - GitHub Flow: https://guides.github.com/introduction/flow/
